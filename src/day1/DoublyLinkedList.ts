@@ -25,6 +25,12 @@ export default class DoublyLinkedList<T> {
     }
 
     insertAt(item: T, idx: number): void {
+        if (!this.head && idx === 0) {
+            this.head = {
+                value: item,
+            };
+        }
+
         let temp = this.head;
         for (let i = 0; i < idx; i++) {
             temp = temp?.next;
@@ -40,7 +46,9 @@ export default class DoublyLinkedList<T> {
             next: temp.next,
         };
 
-        temp.next.prev = temp.next;
+        if (temp.next.next) {
+            temp.next.next.prev = temp.next;
+        }
         this.length++;
     }
 
